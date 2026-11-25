@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react'
 import { Link, NavLink, Outlet, useLocation } from 'react-router'
 
+import { useAuthSession } from '../lib/useAuthSession'
+
 const photoCredits = [
   ['Bacuit Bay', 'Vyacheslav Argenberg', 'Tropical_lagoon_in_Bacuit_Bay,_El_Nido,_Palawan,_Philippines.jpg', 'by/4.0', 'CC BY 4.0'],
   ['Big Lagoon', 'nennnn', 'El_Nido_Palawan_Big_Lagoon.jpg', 'by/2.0', 'CC BY 2.0'],
@@ -10,6 +12,8 @@ const photoCredits = [
 
 export function SiteLayout() {
   const location = useLocation()
+  const session = useAuthSession()
+  const signedIn = session?.user.email && !session.user.is_anonymous
   const previousPath = useRef(location.pathname)
   const main = useRef<HTMLElement>(null)
 
@@ -41,9 +45,12 @@ export function SiteLayout() {
               <span className="mt-1 text-[0.575rem] leading-none font-bold tracking-[0.11em] whitespace-nowrap text-sky-100/80 sm:text-[0.625rem] sm:tracking-[0.13em]">TRAVEL ADVENTURE</span>
             </span>
           </Link>
-          <nav aria-label="Main navigation">
-            <NavLink to="/tours" className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/25 px-3 text-xs font-semibold whitespace-nowrap transition-colors hover:bg-white/10 sm:px-5 sm:text-sm">
+          <nav aria-label="Main navigation" className="flex items-center gap-2 sm:gap-3">
+            <NavLink to="/tours" className="hidden min-h-11 items-center gap-2 rounded-full border border-white/25 sm:inline-flex px-3 text-xs font-semibold whitespace-nowrap transition-colors hover:bg-white/10 sm:px-5 sm:text-sm">
               Explore trips <span aria-hidden="true">↗</span>
+            </NavLink>
+            <NavLink to={signedIn ? '/account' : '/login'} className="inline-flex min-h-11 items-center rounded-full border border-white/25 px-3 text-xs font-semibold whitespace-nowrap hover:bg-white/10 sm:px-5 sm:text-sm">
+              {signedIn ? 'Account' : 'Sign in'}
             </NavLink>
           </nav>
         </div>

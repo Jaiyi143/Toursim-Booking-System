@@ -8,6 +8,11 @@ import { sampleTrips, type Trip } from './lib/trips'
 
 const Checkout = lazy(() => import('./pages/Checkout').then(({ Checkout }) => ({ default: Checkout })))
 
+const PasswordAuth = lazy(() => import('./pages/Account').then(({ PasswordAuth }) => ({ default: PasswordAuth })))
+const Account = lazy(() => import('./pages/Account').then(({ Account }) => ({ default: Account })))
+
+const PasswordReset = lazy(() => import('./pages/PasswordReset').then(({ PasswordReset }) => ({ default: PasswordReset })))
+
 type CatalogState = {
   trips: readonly Trip[]
   status: 'loading' | 'ready' | 'offline'
@@ -62,6 +67,11 @@ function App() {
           <Route path="tours" element={<Catalog trips={catalog.trips} offline={catalog.status === 'offline'} />} />
           <Route path="tours/:slug" element={<TripRoute catalog={catalog} />} />
           <Route path="checkout/:slug" element={<TripRoute catalog={catalog} checkout />} />
+          <Route path="login" element={<Suspense fallback={<LoadingTrip />}><PasswordAuth key="login" /></Suspense>} />
+          <Route path="signup" element={<Suspense fallback={<LoadingTrip />}><PasswordAuth key="signup" signup /></Suspense>} />
+          <Route path="forgot-password" element={<Suspense fallback={<LoadingTrip />}><PasswordReset key="request" /></Suspense>} />
+          <Route path="reset-password" element={<Suspense fallback={<LoadingTrip />}><PasswordReset key="reset" recovery /></Suspense>} />
+          <Route path="account" element={<Suspense fallback={<LoadingTrip />}><Account /></Suspense>} />
           <Route path="*" element={<MissingTrip />} />
         </Route>
       </Routes>

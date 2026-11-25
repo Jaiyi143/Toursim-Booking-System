@@ -1,8 +1,8 @@
-import { useEffect, useState, type FormEvent } from 'react'
-import type { Session } from '@supabase/supabase-js'
+import { useState, type FormEvent } from 'react'
 import { Link } from 'react-router'
 import { photos, type Trip } from '../lib/trips'
 import { supabase } from '../lib/supabase'
+import { authErrorMessage, useAuthSession } from '../lib/useAuthSession'
 
 const inputClass = 'mt-2 block min-h-12 w-full rounded-lg border border-line bg-paper px-3 text-base text-ink'
 
@@ -14,17 +14,11 @@ function manilaDateAt(offset: number) {
 }
 
 export function Checkout({ trip, offline }: { trip: Trip; offline: boolean }) {
-  const [session, setSession] = useState<Session | null | undefined>(supabase ? undefined : null)
+  const session = useAuthSession()
   const [pending, setPending] = useState(false)
   const [message, setMessage] = useState('')
   const [sentTo, setSentTo] = useState('')
   const [receipt, setReceipt] = useState<{ id: string; traveler: string } | null>(null)
-
-  useEffect(() => {
-    if (!supabase) return
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, next) => setSession(next))
-    return () => subscription.unsubscribe()
-  }, [])
 
   async function emailSignIn(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -40,9 +34,7 @@ export function Checkout({ trip, offline }: { trip: Trip; offline: boolean }) {
         options: { emailRedirectTo: window.location.origin + window.location.pathname },
       })
       if (error) {
-        setMessage(error.code === 'email_address_not_authorized'
-          ? 'This project’s email service can only send links to authorized test addresses.'
-          : 'The sign-in link could not be sent. Check the address and try again shortly.')
+        setMessage(authErrorMessage(error, 'The sign-in link could not be sent. Check the address and try again shortly.'))
       } else {
         setSentTo(email)
       }
@@ -132,7 +124,7 @@ export function Checkout({ trip, offline }: { trip: Trip; offline: boolean }) {
             </>
           ) : (
             <>
-              <h2 className="font-display text-3xl">Continue with email</h2>
+              <h2 className="font-display text-3xl">Continue as a guest</h2>
               <p className="mt-2 leading-relaxed text-muted">We’ll send a sign-in link. Open it to return to checkout and enter your travel preferences.</p>
               <form onSubmit={emailSignIn} className="mt-5 space-y-4">
                 <label className="block text-sm font-bold">
@@ -141,6 +133,9 @@ export function Checkout({ trip, offline }: { trip: Trip; offline: boolean }) {
                 </label>
                 <button type="submit" disabled={pending} className="primary-button min-h-12 disabled:cursor-wait disabled:opacity-65">{pending ? 'Sending link…' : 'Send sign-in link'}</button>
               </form>
+              <Link className="mt-3 inline-flex min-h-11 items-center text-sm font-bold text-deep-blue underline underline-offset-4" to={'/login?next=' + encodeURIComponent('/checkout/' + trip.slug)}>
+                Sign in with an account instead
+              </Link>
               {sentTo && <p role="status" className="mt-4 rounded-xl bg-mist p-4 text-sm break-words">Check {sentTo} for your sign-in link.</p>}
             </>
           )}
