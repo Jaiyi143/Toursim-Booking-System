@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #1f2528;
+  --color-paper: #f7f8f5;
+  --color-mist: #eff4f7;
+  --color-line: #dce5e7;
+  --color-muted: #4d5c65;
+  --color-deep-blue: #2458a0;
+  --font-display: Georgia, "Times New Roman", serif;
+  --font-sans: "Segoe UI", system-ui, sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-paper font-sans text-ink antialiased;
+  }
+
+  :focus-visible {
+    outline: 2px solid #397ed5;
+    outline-offset: 4px;
+  }
+
+  header :focus-visible,
+  footer :focus-visible {
+    outline-color: #b6deff;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      transition-duration: 0s !important;
+    }
+  }
+}
+
+@layer components {
+  .page-width {
+    @apply mx-auto w-full max-w-[80rem] px-5 sm:px-8;
+  }
+
+  .hero-shade {
+    background: linear-gradient(90deg, #071c29eb, #0b2434ba 38%, #102b3b24 82%),
+      linear-gradient(0deg, #102b3b7a, transparent 55%);
+  }
+
+  .primary-button {
+    @apply inline-flex cursor-pointer items-center justify-center rounded-xl px-6 font-extrabold text-ink;
+    background: linear-gradient(115deg, #b4cfff, #82abff);
+  }
+
+  .primary-button:hover {
+    background: linear-gradient(115deg, #c2dbff, #9ebfff);
+  }
+
+  .skip-link {
+    @apply absolute top-3 left-3 z-20 -translate-y-20 rounded-md bg-white px-4 py-3 font-bold text-ink focus:translate-y-0;
+  }
+}
+
+@media (max-width: 639px) {
+  .hero-shade {
+    background: linear-gradient(90deg, #071c29ed, #0b24348a 74%, #102b3b5c),
+      linear-gradient(0deg, #102b3b62, transparent 60%);
+  }
+}
