@@ -11,7 +11,7 @@ export type Trip = {
   highlights: readonly string[]
 }
 
-export const photos = import.meta.env.BASE_URL + 'travel/'
+export const photos = import.meta.env.BASE_URL + 'images/travel/'
 
 export const sampleTrips: readonly Trip[] = [
   {

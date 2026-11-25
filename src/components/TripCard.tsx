@@ -1,5 +1,5 @@
 import { Link } from 'react-router'
-import { photos, type Trip } from './trips'
+import { photos, type Trip } from '../lib/trips'
 
 const actionClass = 'inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-sm text-sm font-bold text-deep-blue hover:underline hover:underline-offset-4'
 

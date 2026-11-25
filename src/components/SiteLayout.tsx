@@ -27,7 +27,15 @@ export function SiteLayout() {
       <header id="top" className="bg-ink text-white">
         <div className="page-width flex min-h-[74px] items-center justify-between gap-2 sm:gap-4">
           <Link className="flex min-h-11 items-center gap-2 rounded-sm sm:gap-2.5" to="/" aria-label="Nerea Travel Adventure home">
-            <span aria-hidden="true" className="grid size-8 shrink-0 place-items-center rounded-full border border-sky-200/45 bg-sky-300/10 font-display text-xl italic text-sky-200 sm:size-10 sm:text-2xl">N</span>
+            <span className="block size-12 shrink-0 overflow-hidden rounded-full bg-ink sm:size-16">
+              <img
+                src={import.meta.env.BASE_URL + 'images/nerea-travel-logo.svg'}
+                alt=""
+                width={510}
+                height={510}
+                className="size-full"
+              />
+            </span>
             <span className="flex flex-col">
               <span className="text-[1.1rem] leading-none font-extrabold tracking-[0.13em] italic">NEREA</span>
               <span className="mt-1 text-[0.575rem] leading-none font-bold tracking-[0.11em] whitespace-nowrap text-sky-100/80 sm:text-[0.625rem] sm:tracking-[0.13em]">TRAVEL ADVENTURE</span>

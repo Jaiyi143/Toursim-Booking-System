@@ -1,7 +1,7 @@
 import { useRef, useState, type FormEvent } from 'react'
 import { Link } from 'react-router'
-import { photos, type Trip } from './trips'
-import { TripCard } from './TripCard'
+import { photos, type Trip } from '../lib/trips'
+import { TripCard } from '../components/TripCard'
 
 const emptyFilters = { destination: '', category: '' }
 

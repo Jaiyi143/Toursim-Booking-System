@@ -1,12 +1,12 @@
 import { lazy, Suspense, useEffect, useState } from 'react'
 import { BrowserRouter, Route, Routes, useParams } from 'react-router'
-import { SiteLayout } from './SiteLayout'
-import { HomePage } from './HomePage'
-import { Catalog, TripDetails, MissingTrip } from './TourPages'
-import { supabase } from './supabase'
-import { sampleTrips, type Trip } from './trips'
+import { SiteLayout } from './components/SiteLayout'
+import { HomePage } from './pages/HomePage'
+import { Catalog, TripDetails, MissingTrip } from './pages/TourPages'
+import { supabase } from './lib/supabase'
+import { sampleTrips, type Trip } from './lib/trips'
 
-const Checkout = lazy(() => import('./Checkout').then(({ Checkout }) => ({ default: Checkout })))
+const Checkout = lazy(() => import('./pages/Checkout').then(({ Checkout }) => ({ default: Checkout })))
 
 type CatalogState = {
   trips: readonly Trip[]

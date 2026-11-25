@@ -1,6 +1,6 @@
 import { Link, useSearchParams } from 'react-router'
-import { TripCard } from './TripCard'
-import { photos, type Trip } from './trips'
+import { TripCard } from '../components/TripCard'
+import { photos, type Trip } from '../lib/trips'
 
 const linkClass = 'inline-flex min-h-11 items-center gap-2 rounded-sm text-sm font-bold text-deep-blue underline underline-offset-4'
 const headingClass = 'font-display text-[clamp(2.55rem,6vw,4.7rem)] leading-[0.98] tracking-[-0.06em]'

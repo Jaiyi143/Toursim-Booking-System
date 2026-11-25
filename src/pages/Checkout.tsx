@@ -1,8 +1,8 @@
 import { useEffect, useState, type FormEvent } from 'react'
 import type { Session } from '@supabase/supabase-js'
 import { Link } from 'react-router'
-import { photos, type Trip } from './trips'
-import { supabase } from './supabase'
+import { photos, type Trip } from '../lib/trips'
+import { supabase } from '../lib/supabase'
 
 const inputClass = 'mt-2 block min-h-12 w-full rounded-lg border border-line bg-paper px-3 text-base text-ink'
 
